@@ -5,15 +5,16 @@ import org.junit.Assert;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import tn.esprit.spring.entities.*;
 import tn.esprit.spring.repository.DepartementRepository;
 import tn.esprit.spring.repository.EmployeRepository;
 import tn.esprit.spring.repository.EntrepriseRepository;
+import tn.esprit.spring.repository.TimesheetRepository;
 import tn.esprit.spring.services.IEmployeService;
 import tn.esprit.spring.services.IEntrepriseService;
+import tn.esprit.spring.services.TimesheetServiceImpl;
 
 import javax.transaction.Transactional;
 
@@ -35,6 +36,13 @@ public class TimesheetSpringBootCoreDataJpaMvcRest1ApplicationTests {
 
     @Autowired
     private DepartementRepository repDep;
+    
+    
+    @Autowired
+    private TimesheetServiceImpl servTimesheet;
+    
+    @Autowired
+    private TimesheetRepository repTime;
 
 
 
@@ -106,14 +114,6 @@ public class TimesheetSpringBootCoreDataJpaMvcRest1ApplicationTests {
 
     @Transactional
     @Test
-    public void testAjouterEntreprise(){
-        Entreprise ent= new Entreprise("telecom tunis","telelcomunication");
-        int id=servEntreprise.ajouterEntreprise((ent));
-
-        Assert.assertNotNull(repEnt.findById(id).get());
-    }
-    @Transactional
-    @Test
     public void testajouterDepartement(){
     	
         Departement dep= new Departement("ressourse humaine");
@@ -133,6 +133,44 @@ public class TimesheetSpringBootCoreDataJpaMvcRest1ApplicationTests {
         
     	int entrepriseId=1;
         Assert.assertNotNull(servEntreprise.getEntrepriseById(entrepriseId));
+    }
+    @Transactional
+    @Test
+    public void testAjouterEntreprise(){
+        Entreprise ent= new Entreprise("telecom tunis","telelcomunication");
+        int id=servEntreprise.ajouterEntreprise((ent));
+
+        Assert.assertNotNull(repEnt.findById(id).get());
+    }
+    
+    @Transactional
+    @Test
+    public void testAjouterMission(){
+        Mission miss= new Mission("MissionTested2","telelcomunication");
+        Assert.assertNotNull(servTimesheet.ajouterMission((miss)));
+    }
+    
+   
+    
+    //@Transactional
+    //@Test
+    //public void testAjouterTimeSheet(){
+        //TimesheetPK tms= new TimesheetPK(1,2,new Date(2020-03-01),new Date(2021-03-01));
+        //Assert.assertNotNull(servTimesheet.ajouterTimesheet(tms));
+    //}
+
+    @Transactional
+    @Test
+    public void testFindMissions(){
+        
+        Assert.assertNotNull(servTimesheet.findAllMissionByEmployeJPQL(1));
+    }
+    
+    @Transactional
+    @Test
+    public void testFindEmployesByMission(){
+        
+        Assert.assertNotNull(servTimesheet.getAllEmployeByMission(1));
     }
 
 
