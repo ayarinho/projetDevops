@@ -103,6 +103,7 @@ public class TimesheetSpringBootCoreDataJpaMvcRest1ApplicationTests {
 
 
         Assert.assertNotNull(repEmp.findById(1).get().getPrenom());
+
     }
 
 
@@ -151,13 +152,6 @@ public class TimesheetSpringBootCoreDataJpaMvcRest1ApplicationTests {
     }
     
    
-    
-    //@Transactional
-    //@Test
-    //public void testAjouterTimeSheet(){
-        //TimesheetPK tms= new TimesheetPK(1,2,new Date(2020-03-01),new Date(2021-03-01));
-        //Assert.assertNotNull(servTimesheet.ajouterTimesheet(tms));
-    //}
 
     @Transactional
     @Test

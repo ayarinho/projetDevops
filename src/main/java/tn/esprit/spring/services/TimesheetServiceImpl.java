@@ -10,9 +10,9 @@ import tn.esprit.spring.repository.MissionRepository;
 import tn.esprit.spring.repository.TimesheetRepository;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TimesheetServiceImpl implements ITimesheetService {
@@ -40,13 +40,16 @@ public class TimesheetServiceImpl implements ITimesheetService {
 	public void affecterMissionADepartement(int missionId, int depId) {
 		logger.info("In affecterMissionADepartement():");
 		logger.debug("debut d'ajout de la mission: " + missionId );
-		Mission mission = missionRepository.findById(missionId).get();
-		Departement dep = deptRepoistory.findById(depId).get();
+		Optional<Mission> missionD = missionRepository.findById(missionId);
+		Optional<Departement> depD = deptRepoistory.findById(depId);
+		if (missionD.isPresent() && depD.isPresent()){
+		Mission mission = missionD.get();
+		Departement dep = depD.get();
 		mission.setDepartement(dep);
 		missionRepository.save(mission);
 		logger.info("out of affecterMissionADepartement()");
-		logger.debug("la mission: " + missionId + " est affectée avec succé au département" + depId);
-	}
+		logger.debug("la mission: " + missionId + " est affectée avec succé au département" + depId);}
+}
 
 	public void ajouterTimesheet(int missionId, int employeId, Date dateDebut, Date dateFin) {
 		logger.info("In ajouterTimesheet():");
@@ -71,12 +74,14 @@ public class TimesheetServiceImpl implements ITimesheetService {
 	public void validerTimesheet(int missionId, int employeId, Date dateDebut, Date dateFin, int validateurId) {
 		logger.info("In validerTimesheet():");
 		logger.debug("debut de validation de timesheet: " + missionId + employeId + dateDebut + dateFin );
-		System.out.println("In valider Timesheet");
-		Employe validateur = employeRepository.findById(validateurId).get();
-		Mission mission = missionRepository.findById(missionId).get();
+		Optional<Employe> validateurD = employeRepository.findById(validateurId);
+		Optional<Mission> missD = missionRepository.findById(missionId);
+		if (validateurD.isPresent() && missD.isPresent()){
+		Employe validateur = validateurD.get();
+		Mission mission = missD.get();
 		//verifier s'il est un chef de departement (interet des enum)
 		if(!validateur.getRole().equals(Role.CHEF_DEPARTEMENT)){
-			System.out.println("l'employe doit etre chef de departement pour valider une feuille de temps !");
+			logger.info("l'employe doit etre chef de departement pour valider une feuille de temps !");
 			return;
 		}
 		//verifier s'il est le chef de departement de la mission en question
@@ -88,7 +93,7 @@ public class TimesheetServiceImpl implements ITimesheetService {
 			}
 		}
 		if(!chefDeLaMission){
-			System.out.println("l'employe doit etre chef de departement de la mission en question");
+			logger.info("l'employe doit etre chef de departement de la mission en question");
 			return;
 		}
 //
@@ -98,17 +103,16 @@ public class TimesheetServiceImpl implements ITimesheetService {
 		
 		//Comment Lire une date de la base de données
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-		System.out.println("dateDebut : " + dateFormat.format(timesheet.getTimesheetPK().getDateDebut()));
 		logger.info("out of validerTimesheet()");
-		logger.debug("Le Timesheet" + missionId + employeId + dateDebut + dateFin + "est valide");
+		logger.info("dateDebut : " + dateFormat.format(timesheet.getTimesheetPK().getDateDebut()));
+		logger.debug("Le Timesheet" + missionId + employeId + dateDebut + dateFin + "est valide");}
 	}
 
 
 	public List<Mission> findAllMissionByEmployeJPQL(int employeId) { 
 		logger.info("In findAllMissionByEmployeJPQL():");
 		logger.debug("debut de recherche des Missions de l'employe avec l'id: " + employeId  );
-		List<Mission> missionss = new ArrayList<>();
-		missionss=timesheetRepository.findAllMissionByEmployeJPQL(employeId);
+		List <Mission> missionss =timesheetRepository.findAllMissionByEmployeJPQL(employeId);
 		logger.info("out of findAllMissionByEmployeJPQL()");
 		logger.debug("L'employe " + employeId + "à la liste" + missionss);
 		return missionss;
@@ -122,11 +126,11 @@ public class TimesheetServiceImpl implements ITimesheetService {
 	public List<Employe> getAllEmployeByMission(int missionId) {
 		logger.info("In getAllEmployeByMission():");
 		logger.debug("debut de recherche des employes par mission: " + missionId  );
-		List<Employe> employés = new ArrayList<>();
-		employés =timesheetRepository.getAllEmployeByMission(missionId);
+		
+		List <Employe> employes =timesheetRepository.getAllEmployeByMission(missionId);
 		logger.info("out of getAllEmployeByMission()");
-		logger.debug("Les employes " + employés + "sont affectés à la mission" + missionId);
-		return employés;
+		logger.debug("Les employes " + employes + "sont affectés à la mission" + missionId);
+		return employes;
 	}
 
 }
