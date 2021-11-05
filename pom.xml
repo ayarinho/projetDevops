@@ -10,8 +10,9 @@
 	</parent>
 	<groupId>tn.esprit.spring</groupId>
 	<artifactId>timesheet</artifactId>
-	<version>1.0.2</version>
+	<version>1.0.6</version>
 	<name>timesheet</name>
+	<packaging>war</packaging>
 	<description>timesheet</description>
 
 	<properties>
@@ -134,6 +135,12 @@
     </repository>
   </distributionManagement>
 
-
-
+<build>
+    <plugins>
+        <plugin>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
+        </plugin>
+    </plugins>
+</build> 
 </project>
