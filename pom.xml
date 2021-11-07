@@ -10,14 +10,8 @@
 	</parent>
 	<groupId>tn.esprit.spring</groupId>
 	<artifactId>timesheet</artifactId>
-<<<<<<< HEAD
 	<version>1.0.6</version>
 	<name>timesheet</name>
-	<packaging>war</packaging>
-=======
-	<version>1.0</version>
-	<name>timesheet</name>
->>>>>>> 829615410efb111daf32839bd5894ee5868a1e45
 	<description>timesheet</description>
 
 	<properties>
@@ -62,10 +56,7 @@
 		</dependency>
 
 		<!-- JSF -->
-<<<<<<< HEAD
 		
-=======
->>>>>>> 829615410efb111daf32839bd5894ee5868a1e45
 		<dependency>
 			<groupId>org.apache.myfaces.core</groupId>
 			<artifactId>myfaces-impl</artifactId>
@@ -112,7 +103,6 @@
       <artifactId>log4j</artifactId>
     <version>1.2.17</version>
 </dependency>
-<<<<<<< HEAD
 
 <!-- https://mvnrepository.com/artifact/junit/junit -->
 <dependency>
@@ -151,23 +141,6 @@
             <artifactId>spring-boot-maven-plugin</artifactId>
         </plugin>
     </plugins>
-</build> 
-=======
-		
+</build>
 
-	</dependencies>
-
-
-
-	<build>
-		<outputDirectory>src/main/webapp/WEB-INF/classes</outputDirectory>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
-
->>>>>>> 829615410efb111daf32839bd5894ee5868a1e45
 </project>
