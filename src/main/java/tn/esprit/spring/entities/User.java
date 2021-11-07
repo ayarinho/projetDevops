@@ -73,7 +73,7 @@ public class User implements Serializable {
 		this.nom = nom;
 	}
 
-
+	
 	public String getEmail() {
 		return email;
 	}

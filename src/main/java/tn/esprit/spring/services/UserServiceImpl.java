@@ -1,12 +1,14 @@
 package tn.esprit.spring.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import lombok.NonNull;
 import tn.esprit.spring.entities.Departement;
 import tn.esprit.spring.entities.Employe;
 import tn.esprit.spring.entities.User;
@@ -55,13 +57,14 @@ public class UserServiceImpl {
 	}
 
 
-	public Boolean updateUserWithEmail(String email, int userId) {
+	public Boolean updateUserWithEmail( String email, int userId) {
 		logger.info("Updating User Email");
-		User user = userRepository.findById(userId).get();
+		User user = userRepository.findById(userId).orElse(null);
+		 
 		if (email != "") {
 		user.setEmail(email);
 		userRepository.save(user);
-		logger.info("Email Updated Succefully !");
+		logger.info("Email Updated Succefully !" +user);
 		
 		return true;
 		}else {
