@@ -7,10 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import lombok.NonNull;
-import tn.esprit.spring.entities.Departement;
-import tn.esprit.spring.entities.Employe;
 import tn.esprit.spring.entities.User;
 import tn.esprit.spring.repository.UserRepository;
 
@@ -30,7 +26,7 @@ public class UserServiceImpl {
 		logger.info("Signing In");
 		User user = userRepository.getUserByEmailAndPassword(login, password);
 		if (user != null) {
-			logger.info("user Logged In seccufully  :"+ user);
+			logger.info("user Logged In seccufully  :");
 		return user ; 
 		}else {
 			if (login == "" || password == "") {
@@ -59,54 +55,70 @@ public class UserServiceImpl {
 
 	public Boolean updateUserWithEmail( String email, int userId) {
 		logger.info("Updating User Email");
-		User user = userRepository.findById(userId).orElse(null);
-		 
-		if (email != "") {
-		user.setEmail(email);
-		userRepository.save(user);
-		logger.info("Email Updated Succefully !" +user);
 		
+		Optional<User> user = userRepository.findById(userId);
+
+            if(user.isPresent()) {
+            	
+            User user1=	user.get();
+            
+            if (email != "") {
+        		user1.setEmail(email);
+        		userRepository.save(user1);
+        		logger.info("Email Updated Succefully !");
+        		
+        		return true;
+        		}else {
+        			logger.error("The new Email Must not Be Empty !");
+        			
+        			return false;
+        		}
+            }
+          
 		return true;
-		}else {
-			logger.error("The new Email Must not Be Empty !");
-			
-			return false;
-		}
+		
 
 	}
 	
 	
 	public String getUserPrenomById(int userId) {
+	
 		
-	       User userEntity =null;
+        
+			Optional<User> user = userRepository.findById(userId);
 
-			if (userId == 0) {
+
+			if (!user.isPresent()) {
 				logger.error("No User exist !");
 			
-		
+		       return "No User exist";
 			}else {
 			
-				userEntity = userRepository.findById(userId).get();
-			logger.info(" User exist  : " +userEntity.getPrenom());
+				User user1 = user.get();
+			logger.info(" User exist  : ");
+			
+			return user1.getPrenom();
 
 			}
-			return userEntity.getPrenom();
-
+			
 		}
 		 
 		public Boolean deleteUserById(int userId)
 		{
 			
-			if (userId == 0) {
+			Optional<User> user = userRepository.findById(userId);
+
+			
+			if (!user.isPresent()) {
 				
 				logger.error("No User exist for deleting !");
 			 return false;
 		
 			}else {
 			
-			User user = userRepository.findById(userId).get();
+			User user1=user.get();
 
-			userRepository.delete(user);
+			userRepository.delete(user1);
 			logger.info("User deleted succefully");
 			
            return true;
@@ -116,6 +128,7 @@ public class UserServiceImpl {
 		public List<User> getAllUsers() {
 			
 			List<User> users=	(List<User>) userRepository.findAll();
+			
 			
 			if(users != null) {
 				
@@ -127,7 +140,7 @@ public class UserServiceImpl {
 				logger.info("Users does not  exists !");
 
 				
-				return null;
+				return users;
 			}
 			
 		}

@@ -25,7 +25,7 @@ public interface UserRepository extends CrudRepository<User, Integer>{
 	    public int countuser();
 		
 	    @Query("SELECT nom FROM User")
-	    public List<String> UserNames();
+	    public List<String> userNames();
 	    
 	  
 

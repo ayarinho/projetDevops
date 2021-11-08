@@ -48,8 +48,8 @@ class UserTest {
 		
 			User user= userService.authenticate("youssef@gmail.fr", "ayarinho");
 			
-			//org.junit.jupiter.api.Assertions.assertFalse(user==null);
-			//org.junit.jupiter.api.Assertions.assertTrue(user!=null);
+			//org.junit.jupiter.api.Assertions.assertNotNull(user);
+		
 			
 		}
 		
