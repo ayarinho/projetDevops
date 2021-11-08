@@ -15,8 +15,6 @@ public interface IEmployeService {
 	public int ajouterContrat(Contrat contrat);
 	public int affecterContratAEmploye(int contratId, int employeId);
 	public String getEmployePrenomById(int employeId);
-	public void deleteEmployeById(int employeId);
-	public void deleteContratById(int contratId);
 	public int getNombreEmployeJPQL();
 	public List<String> getAllEmployeNamesJPQL();
 	public List<Employe> getAllEmployeByEntreprise(Entreprise entreprise);

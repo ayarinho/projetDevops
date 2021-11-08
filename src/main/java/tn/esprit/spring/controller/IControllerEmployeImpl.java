@@ -60,13 +60,7 @@ public class IControllerEmployeImpl  {
 	}
 
 	
-	public void deleteEmployeById(int employeId) {
-		iemployeservice.deleteEmployeById(employeId);
-		
-	}
-	public void deleteContratById(int contratId) {
-		iemployeservice.deleteContratById(contratId);
-	}
+
 
 	
 	public int getNombreEmployeJPQL() {

@@ -1,7 +1,6 @@
 package tn.esprit.spring.services;
 
-import java.util.ArrayList;
-import java.util.List;
+
 import java.util.Optional;
 
 import org.apache.log4j.Logger;
@@ -22,20 +21,7 @@ public class EntrepriseServiceImpl implements IEntrepriseService {
 	@Autowired
 	DepartementRepository deptRepoistory;
 
-	//kamel
-	public int ajouterEntreprise(Entreprise entreprise) {
-		try {
-			logger.info("In ajouterEntreprise():");
-			logger.debug("debut d'ajout de l'entreprise: " + entreprise.getName());
-			entrepriseRepoistory.save(entreprise);
-			logger.info("out of ajouterEntreprise()");
-			logger.debug("l'entreprise: " + entreprise.getName() + " de l'id: " + entreprise.getId() + " ajoutée avec succé");
 
-		}catch(Exception e){
-			logger.error("Erreur: "+e);
-		}
-		return entreprise.getId();
-	}
 
 	public int ajouterDepartement(Departement dep) {
 		logger.info("In ajouterDepartement():");
@@ -67,23 +53,7 @@ public class EntrepriseServiceImpl implements IEntrepriseService {
 		
 	}
 	
-	public List<String> getAllDepartementsNamesByEntreprise(int entrepriseId) {
-		logger.info("In getAllDepartementsNamesByEntreprise():");
-		logger.debug("debut de recuperation des departements:");
-		
-		Optional<Entreprise> entrepriseManagedEntity = entrepriseRepoistory.findById(entrepriseId);
-		if(entrepriseManagedEntity.isPresent()) {
-		logger.info("out of getAllDepartementsNamesByEntreprise()");
-		List<String> depNames = new ArrayList<>();
-		for(Departement dep : entrepriseManagedEntity.get().getDepartements()){
-			depNames.add(dep.getName());
-		}
-		logger.debug("les departements sont recuperer avec succées : ");
-		return depNames;
-		}
-		return null;
-		
-	}
+	
 
 	@Transactional
 	public void deleteEntrepriseById(int entrepriseId) {
