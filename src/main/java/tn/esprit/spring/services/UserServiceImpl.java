@@ -24,7 +24,7 @@ public class UserServiceImpl {
 	Logger logger = LoggerFactory.getLogger(EmployeServiceImpl.class); 
 
 	
-	public User authenticate(String login, String password) {
+	public User authenticate(String login, String password) {//p
 		
 		
 		logger.info("Signing In");
