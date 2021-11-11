@@ -14,7 +14,7 @@ services:
   stdin_open: true
   tty: true
 
- Timesheet-contrat-A:
+ timesheet:
   build: \
   image: user
   ports:
