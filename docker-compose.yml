@@ -15,7 +15,7 @@ services:
   tty: true
 
  timesheet:
-  build: \
+  build: .
   image: user
   ports:
     - 8083:8083
