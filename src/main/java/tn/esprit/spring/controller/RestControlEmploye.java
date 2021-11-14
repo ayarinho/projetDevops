@@ -97,7 +97,7 @@ public class RestControlEmploye {
    // URL : http://localhost:8081/SpringMVC/servlet/getEmployePrenomById/2
    @GetMapping(value = "getEmployePrenomById/{idemp}")
    @ResponseBody
-   public Employe getEmployePrenomById(@PathVariable("idemp")int employeId) {
+   public String getEmployePrenomById(@PathVariable("idemp")int employeId) {
 		return iemployeservice.getEmployePrenomById(employeId);
 	}
 

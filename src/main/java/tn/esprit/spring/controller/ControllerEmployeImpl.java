@@ -65,7 +65,7 @@ public class ControllerEmployeImpl  {
 	
 
 	
-	public Employe getEmployePrenomById(int employeId) {
+	public String getEmployePrenomById(int employeId) {
 		return iemployeservice.getEmployePrenomById(employeId);
 	}
 

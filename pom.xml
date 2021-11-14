@@ -13,6 +13,7 @@
 	<artifactId>timesheet</artifactId>
 	<version>1.0</version>
 	<name>timesheet</name>
+
 	<description>timesheet</description>
 
 	<properties>
@@ -108,19 +109,35 @@
 			<version>1.2.17</version>
 		</dependency>
 
+
+		<!-- https://mvnrepository.com/artifact/com.univocity/univocity-parsers -->
 		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>1.2.12</version>
+			<groupId>com.univocity</groupId>
+			<artifactId>univocity-parsers</artifactId>
+			<version>2.5.4</version>
 		</dependency>
 
-
+		<dependency>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-deploy-plugin</artifactId>
+			<version>2.8.2</version>
+			<type>maven-plugin</type>
+		</dependency>
 	</dependencies>
 
 
-
+	<distributionManagement>
+    <snapshotRepository>
+      <id>deploymentRepo1</id>
+      <url>http://localhost:8081/repository/maven-snapshots/</url>
+    </snapshotRepository>
+    <repository>
+      <id>deploymentRepo2</id>
+      <url>http://localhost:8081/repository/maven-releases/</url>
+    </repository>
+  </distributionManagement>
 	<build>
-		<outputDirectory>src/main/webapp/WEB-INF/classes</outputDirectory>
+
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
@@ -128,15 +145,6 @@
 			</plugin>
 		</plugins>
 	</build>
-	<distributionManagement>
-		<snapshotRepository>
-			<id>deploymentRepo1</id>
-			<url>http://localhost:8081/repository/maven-snapshots/</url>
-		</snapshotRepository>
-		<repository>
-			<id>deploymentRepo2</id>
-			<url>http://localhost:8081/repository/maven-releases/</url>
-		</repository>
-	</distributionManagement>
+	
 
 </project>
