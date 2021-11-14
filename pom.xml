@@ -135,7 +135,7 @@
     </snapshotRepository>
     <repository>
       <id>deploymentRepo2</id>
-      <url>http://localhost:8081/repository/maven-releases/</url>
+      <url>http://localhost:8081/repository/timesheet/</url>
     </repository>
   </distributionManagement>
 	<build>
