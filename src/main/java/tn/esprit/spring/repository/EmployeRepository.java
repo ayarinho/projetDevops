@@ -15,12 +15,6 @@ import tn.esprit.spring.entities.Entreprise;
 @Repository
 public interface EmployeRepository extends CrudRepository<Employe, Integer>  {
 	
-	@Query("SELECT e FROM Employe e WHERE e.email=:email and e.password=:password")
-	public Employe getEmployeByEmailAndPassword(@Param("email")String login, @Param("password")String password);
-	
-	
-	
-	
 	@Query("SELECT count(*) FROM Employe")
     public int countemp();
 	
@@ -56,7 +50,9 @@ public interface EmployeRepository extends CrudRepository<Employe, Integer>  {
 			+ "where deps.id=:depId")
     public Double getSalaireMoyenByDepartementId(@Param("depId")int departementId);
 	
-    		
+    @Query("SELECT e FROM Employe e WHERE e.email=:email and e.nom=:nom")
+	public Employe getEmployeByEmailAndPassword(@Param("email")String login, @Param("nom")String password);
+	
    
 
 }
