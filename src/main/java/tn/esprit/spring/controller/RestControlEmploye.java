@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import tn.esprit.spring.dto.ContratDto;
+import tn.esprit.spring.dto.EmployeDto;
 import tn.esprit.spring.entities.Contrat;
 import tn.esprit.spring.entities.Employe;
 import tn.esprit.spring.entities.Entreprise;
@@ -38,10 +40,11 @@ public class RestControlEmploye {
 	
 	@PostMapping("/ajouterEmployer")
 	@ResponseBody
-	public Employe ajouterEmploye(@RequestBody Employe employe)
+	public Employe ajouterEmploye(@RequestBody EmployeDto employe)
 	{
-		iemployeservice.addOrUpdateEmploye(employe);
-		return employe;
+		Employe empl = new Employe();
+		iemployeservice.addOrUpdateEmploye(empl);
+		return empl;
 	}
 	
 	// Modifier email : http://localhost:8081/SpringMVC/servlet/modifyEmail/1/newemail
@@ -69,9 +72,10 @@ public class RestControlEmploye {
 	//{"reference":6,"dateDebut":"2020-03-01","salaire":2000,"typeContrat":"CDD"}
 	@PostMapping("/ajouterContrat")
 	@ResponseBody
-	public int ajouterContrat(@RequestBody Contrat contrat) {
-		iemployeservice.ajouterContrat(contrat);
-		return contrat.getReference();
+	public int ajouterContrat(@RequestBody ContratDto contrat) {
+		Contrat ctr = new Contrat();
+		iemployeservice.ajouterContrat(ctr);
+		return ctr.getReference();
 	}
 	
 	// http://localhost:8081/SpringMVC/servlet/affecterContratAEmploye/6/1
