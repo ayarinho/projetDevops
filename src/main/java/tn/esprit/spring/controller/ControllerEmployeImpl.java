@@ -5,14 +5,12 @@ import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.validation.constraints.Pattern;
 
 import org.ocpsoft.rewrite.annotation.Join;
 import org.ocpsoft.rewrite.el.ELBeanName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
-
 import tn.esprit.spring.entities.Contrat;
 import tn.esprit.spring.entities.Employe;
 import tn.esprit.spring.entities.Entreprise;
@@ -27,6 +25,8 @@ import tn.esprit.spring.services.IEmployeService;
 @ELBeanName(value = "employeController")
 @Join(path = "/", to = "/login.jsf")
 public class ControllerEmployeImpl  {
+	
+	static final String REDIRECT = "/login.xhtml?faces-redirect=true";
 
 	@Autowired
 	IEmployeService employeService;
@@ -34,7 +34,6 @@ public class ControllerEmployeImpl  {
 	private String login; 
 	private String password; 
 	private Boolean loggedIn;
-
 	private Employe authenticatedUser = null; 
 	private String prenom; 
 	private String nom; 
@@ -42,14 +41,11 @@ public class ControllerEmployeImpl  {
 	private boolean actif;
 	private Role role;  
 	public Role[] getRoles() { return Role.values(); }
-
 	private List<Employe> employes; 
-
 	private Integer employeIdToBeUpdated; // getter et setter
 
 
 	public String doLogin() {
-
 		String navigateTo = "null";
 		authenticatedUser=employeService.authenticate(login, password);
 		if (authenticatedUser != null && authenticatedUser.getRole() == Role.ADMINISTRATEUR) {
@@ -57,27 +53,27 @@ public class ControllerEmployeImpl  {
 			loggedIn = true;
 		}		
 
-		else
-		{
-			
+		else{
 			FacesMessage facesMessage =
 					new FacesMessage("Login Failed: Please check your username/password and try again.");
 			FacesContext.getCurrentInstance().addMessage("form:btn",facesMessage);
-		}
-		return navigateTo;	
+
+
+		} return navigateTo;	
+
 	}
 
 	public String doLogout()
 	{
 		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
 	
-	return "/login.xhtml?faces-redirect=true";
+	return REDIRECT;
 	}
 
 
 	public String addEmploye() {
 
-		if (authenticatedUser==null || !loggedIn) return "/login.xhtml?faces-redirect=true";
+		if (authenticatedUser==null || !loggedIn) return REDIRECT;
 
 		employeService.addOrUpdateEmploye(new Employe(nom, prenom, email, password, actif, role)); 
 		return "null"; 
@@ -85,7 +81,7 @@ public class ControllerEmployeImpl  {
 
 	public String removeEmploye(int employeId) {
 		String navigateTo = "null";
-		if (authenticatedUser==null || !loggedIn) return "/login.xhtml?faces-redirect=true";
+		if (authenticatedUser==null || !loggedIn) return REDIRECT;
 
 		employeService.deleteEmployeById(employeId);
 		return navigateTo; 
@@ -94,7 +90,7 @@ public class ControllerEmployeImpl  {
 	public String displayEmploye(Employe empl) 
 	{
 		String navigateTo = "null";
-		if (authenticatedUser==null || !loggedIn) return "/login.xhtml?faces-redirect=true";
+		if (authenticatedUser==null || !loggedIn) return REDIRECT;
 
 
 		this.setPrenom(empl.getPrenom());
@@ -113,7 +109,7 @@ public class ControllerEmployeImpl  {
 	{ 
 		String navigateTo = "null";
 		
-		if (authenticatedUser==null || !loggedIn) return "/login.xhtml?faces-redirect=true";
+		if (authenticatedUser==null || !loggedIn) return REDIRECT;
 
 		employeService.addOrUpdateEmploye(new Employe(employeIdToBeUpdated, nom, prenom, email, password, actif, role)); 
 
